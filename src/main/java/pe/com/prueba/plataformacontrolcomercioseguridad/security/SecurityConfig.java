@@ -37,22 +37,31 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .cors().and()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(
-                        SessionCreationPolicy.STATELESS)
-                .and()
+        return http
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> {}) // se asume configuración personalizada con el bean
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(
+                                "/auth/**",
+                                "/api/swagger-ui.html",
+                                "/api/swagger-ui/**",
+                                "/api/api-docs",
+                                "/api/api-docs/**",
+                                "/api/v3/api-docs",
+                                "/api/v3/api-docs/**",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",        // por si internamente SpringDoc no aplica el context-path
+                                "/swagger-ui.html"
+                        ).permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/productores/**").hasAnyRole("ADMIN", "PRODUCER")
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     @Bean

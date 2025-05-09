@@ -56,6 +56,7 @@ public class Producer {
     @ElementCollection
     @CollectionTable(name = "producer_documents", joinColumns = @JoinColumn(name = "producer_id"))
     @Column(name = "document_url")
+    @Builder.Default
     private List<String> documents = new ArrayList<>();
 
     @CreationTimestamp

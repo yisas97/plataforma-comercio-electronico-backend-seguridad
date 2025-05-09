@@ -54,7 +54,6 @@ public class AuthService {
                 .role(user.getRole())
                 .verified(user.isVerified());
 
-        // Si es un productor, añadir estado de aprobación
         if (user.getRole() == Role.ROLE_PRODUCER) {
             Producer producer = producerRepository.findByUser(user)
                     .orElseThrow(() -> new RuntimeException("Perfil de productor no encontrado"));

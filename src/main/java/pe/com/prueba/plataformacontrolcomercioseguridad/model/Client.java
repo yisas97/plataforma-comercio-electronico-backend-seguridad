@@ -45,6 +45,7 @@ public class Client {
     @ElementCollection
     @CollectionTable(name = "client_preferences", joinColumns = @JoinColumn(name = "client_id"))
     @Column(name = "preference")
+    @Builder.Default
     private List<String> preferences = new ArrayList<>();
 
     @CreationTimestamp
