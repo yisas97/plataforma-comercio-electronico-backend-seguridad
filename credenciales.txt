@@ -1,0 +1,10 @@
+ sqp_a52ac44969f0c8c0b7b69f1d62a4ffb99cceb6f4
+
+
+
+
+ mvn clean verify sonar:sonar \
+   -Dsonar.projectKey=comercio-electronico-seguridad \
+   -Dsonar.projectName='comercio-electronico-seguridad' \
+   -Dsonar.host.url=http://localhost:9000 \
+   -Dsonar.token=sqp_a52ac44969f0c8c0b7b69f1d62a4ffb99cceb6f4
